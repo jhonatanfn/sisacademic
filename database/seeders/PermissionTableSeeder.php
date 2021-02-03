@@ -16,34 +16,37 @@ class PermissionTableSeeder extends Seeder
      */
     public function run()
     {
+        /*
         $permissions = [
             'comunicado-list',
             'comunicado-create',
             'comunicado-edit',
             'comunicado-delete'
          ];
-      
         foreach ($permissions as $permission) {
               Permission::create(['name' => $permission]);
         }
 
         $role = Role::create(['name' => 'Admin']);
-        $permissions = Permission::pluck('id','id')->all();
         $role->syncPermissions($permissions);
+        
         $user= User::find(1);
-        $user->assignRole([$role->id]);
+        $user->assignRole('Admin');
+        */
 
-        /* $admin= Role::create(['name' => 'Admin']);
-
-        $admin->givePermissionTo([
+        $permissions_array=[];
+        $permissions = [
             'comunicado-list',
             'comunicado-create',
             'comunicado-edit',
             'comunicado-delete'
-        ]);
-
+         ];
+         foreach ($permissions as $permission) {
+            array_push($permissions_array,Permission::create(['name' => $permission]));
+        }
+        $roleAdmin=Role::create(['name' => 'Admin']);
+        $roleAdmin->syncPermissions($permissions_array);
         $user= User::find(1);
-        $user->assignRole('Admin'); */
-
+        $user->assignRole('Admin');
     }
 }

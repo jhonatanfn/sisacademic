@@ -8,8 +8,6 @@
     href="{{route('admin.comunicados.create')}}">
     Agregar Comunicado</a>
   @endcan
-  
-
   <h1>Lista de Comunicados</h1>
 @stop
 
@@ -35,18 +33,22 @@
                 <td>{{$comunicado->titulo}}</td>
                 <td>{{$comunicado->categoria->nombre}}</td>
                 <td width="50px">
-                  <a class="btn btn-sm btn-primary" 
-                  href="{{route('admin.comunicados.edit',$comunicado)}}">
-                  Editar</a>
+                  @can('comunicado-edit')
+                    <a class="btn btn-sm btn-primary" 
+                    href="{{route('admin.comunicados.edit',$comunicado)}}">
+                    Editar</a>
+                  @endcan
                 </td>
                 <td width="50px">
-                  <form action="{{route('admin.comunicados.destroy',$comunicado)}}" 
-                  method="post" class="formulario-eliminar">
-                  @csrf 
-                  @method('delete') 
-                  <button type="submit" class="btn btn-danger btn-sm">
-                   Eliminar</button>
-                  </form>
+                  @can('comunicado-delete', Model::class)
+                    <form action="{{route('admin.comunicados.destroy',$comunicado)}}" 
+                    method="post" class="formulario-eliminar">
+                    @csrf 
+                    @method('delete') 
+                    <button type="submit" class="btn btn-danger btn-sm">
+                    Eliminar</button>
+                    </form>
+                  @endcan
                 </td>
               </tr>
           @endforeach

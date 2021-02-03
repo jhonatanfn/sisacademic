@@ -13,13 +13,13 @@ use App\Http\Requests\StoreComunicadoRequest;
 class ComunicadoController extends Controller
 {
     
-    public function __construct()
-    {
+     public function __construct()
+     {
          $this->middleware('permission:comunicado-list|comunicado-create|comunicado-edit|comunicado-delete', ['only' => ['index','show']]);
          $this->middleware('permission:comunicado-create', ['only' => ['create','store']]);
          $this->middleware('permission:comunicado-edit', ['only' => ['edit','update']]);
          $this->middleware('permission:comunicado-delete', ['only' => ['destroy']]);
-    }
+     } 
     
     public function index(){
        

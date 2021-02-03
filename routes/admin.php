@@ -22,8 +22,12 @@ use App\Http\Controllers\Admin\RoleController;
 
 Route::get('', [HomeController::class,'index'])->name('admin.index');
 
+/* Route::group(['middleware' => 
+['permission:comunicado-list|comunicado-create|comunicado-edit|comunicado-delete']], function () {
+    Route::resource('comunicados', ComunicadoController::class)->names('admin.comunicados');
+}); */
+
 Route::group(['middleware' => ['auth']], function() {
-    
     Route::resource('comunicados', ComunicadoController::class)->names('admin.comunicados');
     Route::resource('categorias', CategoriaController::class)->names('admin.categorias');
     Route::resource('cursos', CursoController::class)->names('admin.cursos');
@@ -50,5 +54,6 @@ Route::group(['middleware' => ['auth']], function() {
         [AsistenciaeController::class,'detalle'])->name('admin.asistenciaes.detalle');
 
     Route::resource('roles', RoleController::class)->names('admin.roles');
+       
 });
 

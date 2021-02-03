@@ -287,7 +287,8 @@ return [
                     'text'        => 'Comunicados',
                     'route'       => 'admin.comunicados.index',
                     'icon'        => 'fas fa-fw fa-align-justify',
-                    'active'      =>['admin/comunicados*']
+                    'active'      => ['admin/comunicados*'],
+                    'can'         => ['comunicado-list']
                 ],
                 [
                     'text'        => 'Temas',
