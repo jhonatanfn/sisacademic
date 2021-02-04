@@ -11,11 +11,11 @@ class CursoSeeder extends Seeder
     
     public function run()
     {
-        Curso::factory(20)->create();
+        Curso::factory(10)->create();
         $cursos= Curso::all();
         foreach($cursos as $curso){
             $curso->docentes()->attach([
-                rand(1,20),
+                rand(1,10),
             ]);
         }
     }

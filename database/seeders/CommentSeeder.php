@@ -16,9 +16,9 @@ class CommentSeeder extends Seeder
     public function run()
     {
         $users= User::all();
-        $comunicados= Comunicado::where('id','<=',10)->get();
-        $reunions=Reunion::where('id','<=',10)->get();
-        $temas= Tema::where('id','<=',10)->get();
+        $comunicados= Comunicado::where('id','<=',5)->get();
+        $reunions=Reunion::where('id','<=',5)->get();
+        $temas= Tema::where('id','<=',5)->get();
 
         foreach($users as $user){
             foreach($comunicados as $comunicado){

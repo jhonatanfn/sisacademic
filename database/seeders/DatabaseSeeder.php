@@ -43,8 +43,8 @@ class DatabaseSeeder extends Seeder
        $this->call(CommentSeeder::class);
        $this->call(AsistenciaSeeder::class);
        
-       Asistenciad::factory(50)->create();
-       Asistenciae::factory(50)->create(); 
+       Asistenciad::factory(10)->create();
+       Asistenciae::factory(10)->create(); 
     
        $this->call(PermissionTableSeeder::class);
     }

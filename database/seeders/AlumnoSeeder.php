@@ -12,8 +12,8 @@ class AlumnoSeeder extends Seeder
     
     public function run()
     {
-        $personas_alumnos=Persona::where('id','>=',41)
-        ->where('id','<=',100)->get();
+        $personas_alumnos=Persona::where('id','>=',23)
+        ->where('id','<=',40)->get();
 
         foreach($personas_alumnos as $persona){   
             Alumno::create([

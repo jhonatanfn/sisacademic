@@ -13,8 +13,8 @@ class PadreSeeder extends Seeder
     
     public function run()
     {
-        $personas=Persona::where('id','>=',22)
-        ->where('id','<=',40)->get();
+        $personas=Persona::where('id','>=',12)
+        ->where('id','<=',22)->get();
 
         foreach($personas as $persona){
             Padre::create([

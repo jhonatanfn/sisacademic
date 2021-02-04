@@ -14,13 +14,13 @@ class MatriculaSeeder extends Seeder
     {
         
         $alumnos_1=Alumno::where('id','>=',1)
-        ->where('id','<=',20)->get();
-        $alumnos_2=Alumno::where('id','>=',21)
-        ->where('id','<=',39)->get();
-        $alumnos_3=Alumno::where('id','>=',40)
-        ->where('id','<=',51)->get();
-        $alumnos_4=Alumno::where('id','>=',52)
-        ->where('id','<=',59)->get();
+        ->where('id','<=',5)->get();
+        $alumnos_2=Alumno::where('id','>=',6)
+        ->where('id','<=',10)->get();
+        $alumnos_3=Alumno::where('id','>=',11)
+        ->where('id','<=',14)->get();
+        $alumnos_4=Alumno::where('id','>=',15)
+        ->where('id','<=',18)->get();
         $periodo_1=Periodo::find(1);
         $periodo_2=Periodo::find(2);
         $periodo_3=Periodo::find(3);

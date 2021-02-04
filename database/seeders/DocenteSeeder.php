@@ -14,7 +14,7 @@ class DocenteSeeder extends Seeder
     public function run()
     {
         $personas=Persona::where('id','>=',2)
-        ->where('id','<=',21)->get();
+        ->where('id','<=',11)->get();
         
         foreach($personas as $persona){
             Docente::create([

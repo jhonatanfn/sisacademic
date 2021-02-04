@@ -11,7 +11,7 @@ class ComunicadoSeeder extends Seeder
     
     public function run()
     {
-        $comunicados=Comunicado::factory(20)->create();
+        $comunicados=Comunicado::factory(10)->create();
 
         foreach($comunicados as $comunicado){
             

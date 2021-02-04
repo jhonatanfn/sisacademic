@@ -23,6 +23,6 @@ class PersonaSeeder extends Seeder
             'email'=>'jhonatanflores2014@gmail.com'
         ]);
     
-        Persona::factory(99)->create(); 
+        Persona::factory(39)->create(); 
     }
 }
