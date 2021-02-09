@@ -1,50 +1,58 @@
 @extends('adminlte::page')
 
-@section('title', 'Asistencias')
+@section('title', 'Roles')
 
 @section('content_header')
-    <h1>Listado de Asistencias</h1>
+    @can('role-create')
+    <a class="btn btn-sm btn-secondary float-right" 
+    href="{{route('admin.roles.create')}}">
+    Agregar Rol</a>
+    @endcan
+    <h1>Lista de roles</h1>
 @stop
 
 @section('content')
-  
 <div class="card">
  
-  <div class="card-body table-responsive">
-    <table class="table table-striped" id="reunions">
-      <thead>
-        <tr>
-          <th>Id</th>
-          <th>Titulo</th>
-          <th>Curso</th>
-          <th>Fecha</th>
-          <th>Hora</th>
-          <th>Periodo</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        @foreach ($reuniones as $reunion)
-            <tr>
-              <td>{{$reunion->id}}</td>
-              <td>{{$reunion->titulo}}</td>
-              <td>{{$reunion->programacion->curso->nombre}}</td>
-              <td>{{$reunion->fecha}}</td>
-              <td>{{$reunion->hora}}</td>
-              <td>{{$reunion->programacion->periodo->nombre}}</td>
-              <td width="50px">
-                @can('asistenciapadre-edit')
-                  <a class="btn btn-sm btn-primary" 
-                  href="{{route('admin.asistencias.detalle',$reunion)}}">
-                  Asistencias</a>
-                @endcan
-              </td>
-            </tr>
-        @endforeach
-      </tbody>
-    </table>
+    <div class="card-body table-responsive">
+      <table class="table table-striped" id="roles">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Nombre</th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          @foreach ($roles as $rol)
+              <tr>
+                <td>{{$rol->id}}</td>
+                <td>{{$rol->name}}</td>
+                <td width="50px">
+                  @can('role-edit')
+                    <a class="btn btn-sm btn-primary" 
+                    href="{{route('admin.roles.edit',$rol)}}">
+                    Editar</a>
+                  @endcan
+                </td>
+                <td width="50px">
+                    @can('role-delete')
+                      <form action="{{route('admin.roles.destroy',$rol)}}" 
+                      method="post">
+                      @csrf 
+                      @method('delete') 
+                      <button type="submit" class="btn btn-danger btn-sm">
+                      Eliminar</button>
+                      </form>
+                    @endcan   
+                </td>
+              </tr>
+          @endforeach
+        </tbody>
+      </table>
+    </div>
   </div>
-</div>
 @stop
 
 @section('css')
@@ -62,7 +70,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
     <script>
-      $('#temas').DataTable({
+      $('#roles').DataTable({
           responsive:true,
           autowidth:false,
           "language": {

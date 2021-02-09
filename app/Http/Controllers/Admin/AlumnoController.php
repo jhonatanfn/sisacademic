@@ -11,6 +11,13 @@ use App\Rules\Dninoexiste;
 class AlumnoController extends Controller
 {
 
+    public function __construct()
+    {
+        $this->middleware('permission:alumno-list|alumno-create|alumno-edit|alumno-delete', ['only' => ['index','show']]);
+        $this->middleware('permission:alumno-create', ['only' => ['create','store']]);
+        $this->middleware('permission:alumno-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:alumno-delete', ['only' => ['destroy']]);
+    } 
     public function index()
     {
         $alumnos= Alumno::all();

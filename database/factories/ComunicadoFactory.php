@@ -24,7 +24,6 @@ class ComunicadoFactory extends Factory
             'cuerpo'=>$this->faker->text(2000),
             'status'=>$this->faker->randomElement([1,2]),
             'categoria_id'=>Categoria::all()->random()->id,
-            'estado_id'=>Estado::all()->random()->id,
             'user_id'=>User::all()->random()->id
         ];
     }

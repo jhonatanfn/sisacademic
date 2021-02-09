@@ -3,7 +3,7 @@
         <div class="flex justify-between items-center">
             <div>
                 <a href="#" class="text-gray-800 text-xl font-bold md:text-2xl">
-                    Temas</a>
+                    Temas en clase</a>
             </div>
         </div>
     </div>

@@ -21,15 +21,13 @@ class ReunionSeeder extends Seeder
             'user_id'=>$programacion->docente->persona->user->id
           ]);
         }
-        $reunions= Reunion::all();
+        /* $reunions= Reunion::all();
 
         foreach($reunions as $reunion){
-            Image::create([
-                /* 'url'=>'reuniones/'.\Faker\Provider\Image::image(public_path('storage\reuniones'),440,280,null,false), */
-                'url'=>'images/reunion.jpg',
-                'imageable_id'=>$reunion->id,
-                'imageable_type'=>Reunion::class
-            ]);
-        } 
+          Image::factory(1)->create([
+            'imageable_id'=>$reunion->id,
+            'imageable_type'=>Reunion::class
+          ]);
+        }  */
     }
 }

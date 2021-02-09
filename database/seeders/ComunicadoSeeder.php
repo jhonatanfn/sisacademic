@@ -13,14 +13,12 @@ class ComunicadoSeeder extends Seeder
     {
         $comunicados=Comunicado::factory(10)->create();
 
-        foreach($comunicados as $comunicado){
+       /*  foreach($comunicados as $comunicado){
             
-            Image::create([
-                /* 'url'=>'comunicados/'.\Faker\Provider\Image::image(public_path('storage\comunicados'),640,480,null,false), */
-                'url'=>'images/comunicado.jpg',
+            Image::factory(1)->create([
                 'imageable_id'=>$comunicado->id,
                 'imageable_type'=>Comunicado::class
             ]);
-        }
+        } */
     }
 }

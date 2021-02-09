@@ -33,12 +33,14 @@ class ComunicadoController extends Controller
 
     public function show(Comunicado $comunicado)
     {
+        $this->authorize('published',$comunicado);
+        //$this->authorize('privado',$comunicado);
+        
         $categorias= Categoria::all();
         if(auth()->user()==null){
             $similares=Comunicado::where('categoria_id',$comunicado->categoria_id)
             ->where('status',2)
             ->where('id','!=',$comunicado->id)
-            ->where('estado_id',1)
             ->latest('id')
             ->take(4)
             ->get();
@@ -61,7 +63,6 @@ class ComunicadoController extends Controller
         if(auth()->user()==null){
             $comunicados= Comunicado::where('categoria_id',$categoria->id)
             ->where('status',2)
-            ->where('estado_id',1)
             ->latest('id')
             ->paginate(5);
         }else{
@@ -88,25 +89,6 @@ class ComunicadoController extends Controller
     {
         //
     }
-
-    public function estado(Estado $estado){
-        $categorias= Categoria::all();
-
-        if(auth()->user()==null){
-            $comunicados= $estado->comunicados()
-            ->where('status',2)
-            ->where('estado_id',1)
-            ->latest('id')
-            ->paginate(5);
-        }else{
-            $comunicados= $estado->comunicados()
-            ->where('status',2)
-            ->latest('id')
-            ->paginate(5);
-        }
-        
-        return view('comunicados.estado',compact('comunicados','estado','categorias'));
-      }
 
       public function publicar(Comunicado $comunicado,Request $request){
         

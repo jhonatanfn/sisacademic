@@ -20,17 +20,12 @@ class CreateComunicadosTable extends Migration
             $table->text('extracto')->nullable();
             $table->longText('cuerpo')->nullable();
             $table->enum('status',[1,2])->default(1);
-            /* $table->enum('estado',[1,2])->default(1); */
 
             $table->unsignedBigInteger('categoria_id');
-            $table->unsignedBigInteger('estado_id'); 
             $table->unsignedBigInteger('user_id');
 
             $table->foreign('categoria_id')->references('id')
             ->on('categorias')->onDelete('cascade');
-
-           $table->foreign('estado_id')->references('id')
-            ->on('estados')->onDelete('cascade');
 
             $table->foreign('user_id')->references('id')
             ->on('users')->onDelete('cascade');

@@ -12,13 +12,21 @@ use App\Http\Requests\StoreProgramacionRequest;
 
 class ProgramacionController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:programacion-list|programacion-create|programacion-edit|programacion-delete', ['only' => ['index','show']]);
+        $this->middleware('permission:programacion-create', ['only' => ['create','store']]);
+        $this->middleware('permission:programacion-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:programacion-delete', ['only' => ['destroy']]);
+    } 
+    
     public function index()
     {
-        if(auth()->user()->id !=1){
-            $programacions=Programacion::where('docente_id',auth()->user()->persona->docente->id)
-            ->paginate(20);
-        }else{
+        if(auth()->user()->id ==1){
             $programacions= Programacion::paginate(10);
+        }else{
+            $programacions=Programacion::where('docente_id',auth()->user()->persona->docente->id)
+            ->paginate(10);
         }
         
         return view('admin.programacions.index',compact('programacions'));

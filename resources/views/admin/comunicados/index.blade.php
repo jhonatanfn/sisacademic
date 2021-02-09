@@ -42,7 +42,7 @@
                 <td width="50px">
                   @can('comunicado-delete', Model::class)
                     <form action="{{route('admin.comunicados.destroy',$comunicado)}}" 
-                    method="post" class="formulario-eliminar">
+                    method="post" class="">
                     @csrf 
                     @method('delete') 
                     <button type="submit" class="btn btn-danger btn-sm">

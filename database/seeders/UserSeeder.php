@@ -19,6 +19,5 @@ class UserSeeder extends Seeder
             'persona_id'=>1
         ]);
 
-        
     }
 }

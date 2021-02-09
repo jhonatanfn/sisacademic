@@ -20,7 +20,6 @@
             <th>Fecha</th>
             <th>Hora</th>
             <th>status</th>
-           {{--  <th></th> --}}
           </tr>
         </thead>
         <tbody>
@@ -33,12 +32,8 @@
                     {{$asistenciad->programacion->docente->persona->apellidos}}</td>  
                 <td>{{$asistenciad->fecha}}</td>
                 <td>{{$asistenciad->hora}}</td>   
-                <td>{{$asistenciad->status}}</td>         
-             {{--    <td width="50px">
-                  <a class="btn btn-sm btn-primary" 
-                    href="{{route('admin.asistenciads.detalle',$programacion)}}">
-                    Asistencias</a>
-                </td> --}}
+                <td>{{$asistenciad->status}}
+                </td>         
               </tr>
           @endforeach
         </tbody>

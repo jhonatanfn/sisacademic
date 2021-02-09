@@ -32,9 +32,11 @@
                 <td>{{$programacion->periodo->nombre}}</td>
                 <td>{{$programacion->periodo->status}}</td>
                 <td width="50px">
-                  <a class="btn btn-sm btn-primary" 
+                  @can('asistenciaalumno-edit')
+                    <a class="btn btn-sm btn-primary" 
                     href="{{route('admin.asistenciaes.detalle',$programacion)}}">
                     Asistencias</a>
+                  @endcan
                 </td>
               </tr>
           @endforeach

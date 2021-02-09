@@ -7,46 +7,49 @@ use Illuminate\Http\Request;
 use App\Models\Tema;
 use App\Models\Programacion;
 use App\Models\Image;
-use App\Http\Requests\StoreTemaRequest;
+use App\Http\Requests\TemaRequest;
+use Illuminate\Support\Facades\Storage;
 
 class TemaController extends Controller
 {
-    
+    public function __construct()
+     {
+         $this->middleware('permission:tema-list|tema-create|tema-edit|tema-delete', ['only' => ['index','show']]);
+         $this->middleware('permission:tema-create', ['only' => ['create','store']]);
+         $this->middleware('permission:tema-edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:tema-delete', ['only' => ['destroy']]);
+     } 
+
     public function index()
     {
         $temas= Tema::where('user_id',auth()->user()->id)->paginate(10);
         return view('admin.temas.index',compact('temas'));
     }
-
    
     public function create()
     {
-        $cursos= array();
-        $programacions=Programacion::where('docente_id',auth()->user()->persona->docente->id)->get();
+        $programacionlist= array();
+        if(auth()->user()->id==1){
+            $programacions= Programacion::all();
+        }else{
+            $programacions=Programacion::where('docente_id',auth()->user()->persona->docente->id)->get();  
+        }
         foreach($programacions as $programacion){
             if($programacion->periodo->status==1){
-                array_push($cursos,$programacion);
+                array_push($programacionlist,$programacion);
             }
         }
-        return view('admin.temas.create',compact('cursos'));
+        return view('admin.temas.create',compact('programacionlist'));
     }
 
-    public function store(StoreTemaRequest $request)
+    public function store(TemaRequest $request)
     {
         $tema=Tema::create($request->all());
 
-        if($request->file('file')==null){
-            Image::create([
-                'url'=>'temas/'.\Faker\Provider\Image::image(public_path('storage\temas'),640,480,null,false),
-                'imageable_id'=>$tema->id,
-                'imageable_type'=>Tema::class
-            ]);
-        }else{
-            $url= $request->file('file')->store('temas');
-            Image::create([
-                'url'=>$url,
-                'imageable_id'=>$tema->id,
-                'imageable_type'=>Tema::class
+        if($request->file('file')){
+            $url= Storage::put('imagenes', $request->file('file'));
+            $tema->image()->create([
+                'url'=>$url
             ]);
         }
         return redirect()->route('admin.temas.edit',$tema)
@@ -63,26 +66,39 @@ class TemaController extends Controller
 
     public function edit(Tema $tema)
     {
-        $cursos= array();
-        $programacions=Programacion::where('docente_id',auth()->user()->persona->docente->id)->get();
+        $this->authorize('author',$tema);
+        $programacionlist= array();
+        if(auth()->user()->id==1){
+            $programacions= Programacion::all();
+        }else{
+            $programacions=Programacion::where('docente_id',auth()->user()->persona->docente->id)->get();  
+        }
         foreach($programacions as $programacion){
             if($programacion->periodo->status==1){
-                array_push($cursos,$programacion);
+                array_push($programacionlist,$programacion);
             }
         }
 
-        return view('admin.temas.edit',compact('tema','cursos'));
+        return view('admin.temas.edit',compact('tema','programacionlist'));
     }
 
-    public function update(StoreTemaRequest $request, Tema $tema)
+    public function update(TemaRequest $request, Tema $tema)
     {
+        $this->authorize('author',$tema);
         $tema->update($request->all());
         
-        if($request->file('file')!=null){
-            $url= $request->file('file')->store('temas');
-            $tema->image()->update([
-                'url'=>$url
-            ]);
+        if($request->file('file')){
+            $url= Storage::put('imagenes', $request->file('file'));
+            if($tema->image){
+                Storage::delete($tema->image->url);
+                $tema->image->update([
+                    'url'=>$url
+                ]);
+            }else{
+                $tema->image()->create([
+                    'url'=>$url
+                ]);
+            }
         }
         
         return redirect()->route('admin.temas.edit',$tema)
@@ -92,6 +108,7 @@ class TemaController extends Controller
   
     public function destroy(Tema $tema)
     {
+        $this->authorize('author',$tema);
         $tema->delete();
         return redirect()->route('admin.temas.index')
         ->with('info','El tema se eliminó correctamente.');

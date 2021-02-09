@@ -3,9 +3,11 @@
 @section('title', 'Padres')
 
 @section('content_header')
-<a class="btn btn-sm btn-secondary float-right" 
+    @can('padre-create', Model::class)
+      <a class="btn btn-sm btn-secondary float-right" 
       href="{{route('admin.padres.create')}}">
-       Agregar Padre</a>
+      Agregar Padre</a>
+    @endcan
     <h1>Listado de Padres</h1>
 @stop
 
@@ -35,18 +37,22 @@
                 <td>{{$padre->persona->apellidos}}</td>
                 <td>{{$padre->persona->telefono}}</td>
                 <td width="50px">
+                  @can('padre-edit')
                   <a class="btn btn-sm btn-primary" 
-                    href="{{route('admin.padres.edit',$padre)}}">
-                    Editar</a>
+                  href="{{route('admin.padres.edit',$padre)}}">
+                  Editar</a>
+                  @endcan
                 </td>
                 <td width="50px">
-                    <form action="{{route('admin.padres.destroy',$padre)}}" 
-                        method="post" class="formulario-eliminar">
-                        @csrf 
-                        @method('delete') 
-                        <button type="submit" class="btn btn-danger btn-sm">
-                        Eliminar</button>
-                    </form>
+                    @can('padre-delete')
+                      <form action="{{route('admin.padres.destroy',$padre)}}" 
+                      method="post" class="formulario-eliminar">
+                      @csrf 
+                      @method('delete') 
+                      <button type="submit" class="btn btn-danger btn-sm">
+                      Eliminar</button>
+                      </form>
+                    @endcan
                 </td>
               </tr>
           @endforeach

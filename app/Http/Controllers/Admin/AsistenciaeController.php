@@ -9,6 +9,13 @@ use App\Models\Programacion;
 
 class AsistenciaeController extends Controller
 {
+    public function __construct()
+     {
+         $this->middleware('permission:asistenciaalumno-list|asistenciaalumno-create|asistenciaalumno-edit|asistenciaalumno-delete', ['only' => ['index','show']]);
+         $this->middleware('permission:asistenciaalumno-create', ['only' => ['create','store']]);
+         $this->middleware('permission:asistenciaalumno-edit', ['only' => ['edit','update','detalle']]);
+         $this->middleware('permission:asistenciaalumno-delete', ['only' => ['destroy']]);
+    } 
     
     public function index()
     {

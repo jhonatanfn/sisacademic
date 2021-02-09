@@ -3,12 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ValidationComunicado;
 use App\Models\Comunicado;
 use App\Models\Categoria;
-use App\Models\Image;
 use App\Models\Estado;
-use App\Http\Requests\StoreComunicadoRequest;
+use App\Http\Requests\ComunicadoRequest;
+use Illuminate\Support\Facades\Storage;
 
 class ComunicadoController extends Controller
 {
@@ -31,54 +30,55 @@ class ComunicadoController extends Controller
 
     public function create(){
         $categorias= Categoria::pluck('nombre','id');
-        $estados=Estado::pluck('nombre','id');
-        return view('admin.comunicados.create', compact('categorias','estados'));
+        return view('admin.comunicados.create', compact('categorias'));
     }
 
-    public function store(StoreComunicadoRequest $request){
+    public function store(ComunicadoRequest $request){
        
         $comunicado=Comunicado::create($request->all());
-
-        if($request->file('file')==null){
-            Image::create([
-                'url'=>'comunicados/'.\Faker\Provider\Image::image(public_path('storage\comunicados'),640,480,null,false),
-                'imageable_id'=>$comunicado->id,
-                'imageable_type'=>Comunicado::class
-            ]);
-        }else{
-            $url= $request->file('file')->store('comunicados');
-            Image::create([
-                'url'=>$url,
-                'imageable_id'=>$comunicado->id,
-                'imageable_type'=>Comunicado::class
-            ]);
-        }
-        return redirect()->route('admin.comunicados.edit',$comunicado)
-        ->with('guardar','El comunicado se guardó correctamente.');
-    }
-
-    public function edit(Comunicado $comunicado){
-        $categorias= Categoria::pluck('nombre','id');
-        $estados=Estado::pluck('nombre','id');
-        return view('admin.comunicados.edit', compact('comunicado','categorias','estados'));
-    }
-
-    public function update(Comunicado $comunicado,ValidationComunicado $request){
-       
-        if($request->file('file')==null){
-            $comunicado->update($request->all());
-        }else{
-            $url= $request->file('file')->store('comunicados');
-            $comunicado->image()->update([
+        
+        if($request->file('file')){
+            $url= Storage::put('imagenes', $request->file('file'));
+            $comunicado->image()->create([
                 'url'=>$url
             ]);
         }
-        
+        return redirect()->route('admin.comunicados.edit',$comunicado)
+        ->with('guardar','El comunicado se guardó correctamente.'); 
+
+    }
+
+    public function edit(Comunicado $comunicado){
+        $this->authorize('author',$comunicado);
+        $categorias= Categoria::pluck('nombre','id');
+        return view('admin.comunicados.edit', compact('comunicado','categorias'));
+    }
+
+    public function update(Comunicado $comunicado,ComunicadoRequest $request){
+        $this->authorize('author',$comunicado);
+        $comunicado->update($request->all());
+
+        if($request->file('file')){
+            $url= Storage::put('imagenes', $request->file('file'));
+            if($comunicado->image){
+                Storage::delete($comunicado->image->url);
+                $comunicado->image->update([
+                    'url'=>$url
+                ]);
+            }else{
+                $comunicado->image()->create([
+                    'url'=>$url
+                ]);
+            }
+        }
+
         return redirect()->route('admin.comunicados.edit',$comunicado)
         ->with('actualizar','El comunicado se actualizó correctamente.');
+
     }
 
     public function destroy(Comunicado $comunicado){
+        $this->authorize('author',$comunicado);
         $comunicado->delete();
         return redirect()->route('admin.comunicados.index')
         ->with('info','El comunicado se eliminó correctamente.');

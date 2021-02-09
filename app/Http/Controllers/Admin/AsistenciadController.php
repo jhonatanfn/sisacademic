@@ -11,7 +11,14 @@ use Illuminate\Support\Facades\Date;
 
 class AsistenciadController extends Controller
 {
-    
+    public function __construct()
+     {
+         $this->middleware('permission:asistenciadocente-list|asistenciadocente-create|asistenciadocente-edit|asistenciadocente-delete', ['only' => ['index','show']]);
+         $this->middleware('permission:asistenciadocente-create', ['only' => ['create','store']]);
+         $this->middleware('permission:asistenciadocente-edit', ['only' => ['edit','update','detalle']]);
+         $this->middleware('permission:asistenciadocente-delete', ['only' => ['destroy']]);
+    } 
+
     public function index()
     {
         $periodo= Periodo::where('status',1)->first();

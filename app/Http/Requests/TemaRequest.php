@@ -4,27 +4,14 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreTemaRequest extends FormRequest
+class TemaRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
+    
     public function authorize()
     {
-        if($this->user_id==auth()->user()->id){
-            return true;
-        }else{
-            return false;
-        }
+        return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
     public function messages()
     {
         return [
@@ -32,6 +19,7 @@ class StoreTemaRequest extends FormRequest
             'slug.required'=>'El campo Slug es obligatorio',
             'proposito.required'=>'El campo Proposito es obligatorio',
             'contenido.required'=>'El campo Contenido es obligatorio',
+            'file.image'=>'Archivo no es una imagen'
         ];
     }
 
@@ -41,7 +29,8 @@ class StoreTemaRequest extends FormRequest
             'titulo'=>'required',
             'slug'=>'required|unique:comunicados',
             'proposito'=>'required',
-            'contenido'=>'required'
+            'contenido'=>'required',
+            'file'=>'image'
         ];
         return $rules;
     }

@@ -4,20 +4,12 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreReunionRequest extends FormRequest
+class ReunionRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
+    
     public function authorize()
     {
-        if($this->user_id==auth()->user()->id){
-            return true;
-        }else{
-            return false;
-        }
+       return true;
     }
 
     public function messages()
@@ -29,6 +21,7 @@ class StoreReunionRequest extends FormRequest
             'fecha.required'=>'El campo Fecha es obligatorio',
             'hora.required'=>'El campo Hora es obligatorio',
             'contenido.required'=>'El campo Contenido es obligatorio',
+            'file.image'=>'Archivo no es una imagen'
         ];
     }
 
@@ -40,7 +33,8 @@ class StoreReunionRequest extends FormRequest
             'fecha'=>'required',
             'hora'=>'required',
             'objetivo'=>'required',
-            'contenido'=>'required'
+            'contenido'=>'required',
+            'file'=>'image'
         ];
         return $rules;
     }

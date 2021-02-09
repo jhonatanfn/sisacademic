@@ -20,12 +20,10 @@ use App\Http\Controllers\Admin\AsistenciadController;
 use App\Http\Controllers\Admin\AsistenciaeController;
 use App\Http\Controllers\Admin\RoleController;
 
-Route::get('', [HomeController::class,'index'])->name('admin.index');
-
-/* Route::group(['middleware' => 
-['permission:comunicado-list|comunicado-create|comunicado-edit|comunicado-delete']], function () {
-    Route::resource('comunicados', ComunicadoController::class)->names('admin.comunicados');
-}); */
+Route::group(['middleware' => 
+['permission:administrar-panel']], function () {
+    Route::get('', [HomeController::class,'index'])->name('admin.index');
+}); 
 
 Route::group(['middleware' => ['auth']], function() {
     Route::resource('comunicados', ComunicadoController::class)->names('admin.comunicados');

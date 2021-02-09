@@ -1,18 +1,18 @@
 @extends('adminlte::page')
-@section('title', 'Actividades')
+@section('title', 'Roles')
 @section('content_header')
-    <h1>Editar Actividad</h1>
+    <h1>Editar Rol</h1>
 @stop
 
 @section('content')  
                
 <div class="card">
   <div class="card-body">
-    {!! Form::model($actividad,['route'=>['admin.actividads.update',$actividad],'method'=>'put','class'=>'formulario-update','enctype'=>'multipart/form-data']) !!}
+    {!! Form::model($role,['route'=>['admin.roles.update',$role],'autocomplete'=>'off','method'=>'put']) !!}
+   
+       @include('admin.roles.partials.form')
 
-      @include('admin.actividads.partials.form')
-
-      {!! Form::submit('Actualizar actividad', ['class'=>'btn btn-primary']) !!}
+      {!! Form::submit('Actualizar rol', ['class'=>'btn btn-primary']) !!}
 
     {!! Form::close() !!}
   </div>
@@ -26,17 +26,8 @@
 
 @section('js')
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-    <script src="{{asset('vendor/jQuery-Plugin-stringToSlug-1.3/jquery.stringToSlug.min.js')}}"></script>
-    <script>
-      $(document).ready( function() {
-      $("#titulo").stringToSlug({
-          setEvents: 'keyup keydown blur',
-          getPut: '#slug',
-          space: '-'
-      });
-      });
-    </script>
-    
+    <script src="https://cdn.ckeditor.com/ckeditor5/24.0.0/classic/ckeditor.js"></script>
+
     @if (session('guardar'))
       <script>
         Swal.fire(

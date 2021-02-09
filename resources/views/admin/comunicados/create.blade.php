@@ -8,7 +8,7 @@
 
     <div class="card">
       <div class="card-body">
-        {!! Form::open(['route'=>'admin.comunicados.store',/* 'class'=>'formulario-save', */'enctype'=>'multipart/form-data']) !!}
+        {!! Form::open(['route'=>'admin.comunicados.store','autocomplete'=>'off', 'files'=>true]) !!}
           
           @include('admin.comunicados.partials.form')
 
@@ -21,6 +21,19 @@
 
 @section('css')
     <link rel="stylesheet" href="/css/admin_custom.css">
+
+    <style>
+      .image-wrapper{
+          position: relative;
+          padding-bottom: 56.25%;
+      }
+      .image-wrapper img{
+          position: absolute;
+          object-fit: cover;
+          width: 100%;
+          height: 100%;
+      }
+  </style>
 @stop
 @section('js')
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
@@ -45,6 +58,21 @@
         .catch( error => {
             console.error( error );
   });
+
+  //Cambiar imagen
+        document.getElementById("file").addEventListener('change', cambiarImagen);
+
+        function cambiarImagen(event){
+        var file = event.target.files[0];
+
+        var reader = new FileReader();
+        reader.onload = (event) => {
+            document.getElementById("picture").setAttribute('src', event.target.result); 
+        };
+
+        reader.readAsDataURL(file);
+        }
+
 </script>
 
 <script>

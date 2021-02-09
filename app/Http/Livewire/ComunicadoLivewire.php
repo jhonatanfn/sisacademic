@@ -14,7 +14,6 @@ class ComunicadoLivewire extends Component
     {
         if(auth()->user()==null){
             $comunicados= Comunicado::where('status',2)
-            ->where('estado_id',1)
             ->latest('id')->paginate(5);
         }else{
             $comunicados= Comunicado::where('status',2)

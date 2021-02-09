@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Home')
+@section('title', 'Comunicados')
 
 @section('content_header')
     <h1>Detalle de Comunicado</h1>

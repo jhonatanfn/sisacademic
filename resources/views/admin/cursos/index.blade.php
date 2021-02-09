@@ -3,9 +3,11 @@
 @section('title', 'Cursos')
 
 @section('content_header')
-<a class="btn btn-sm btn-secondary float-right" 
-      href="{{route('admin.cursos.create')}}">
-       Agregar Curso</a>
+    @can('curso-create')
+    <a class="btn btn-sm btn-secondary float-right" 
+    href="{{route('admin.cursos.create')}}">
+     Agregar Curso</a>
+    @endcan
     <h1>Listado de Cursos</h1>
 @stop
 
@@ -29,18 +31,22 @@
                 <td>{{$curso->id}}</td>
                 <td>{{$curso->nombre}}</td>
                 <td width="50px">
+                  @can('curso-edit')
                   <a class="btn btn-sm btn-primary" 
-                    href="{{route('admin.cursos.edit',$curso)}}">
-                    Editar</a>
+                  href="{{route('admin.cursos.edit',$curso)}}">
+                  Editar</a>
+                  @endcan
                 </td>
                 <td width="50px">
-                <form action="{{route('admin.cursos.destroy',$curso)}}" 
+                  @can('curso-delete')
+                    <form action="{{route('admin.cursos.destroy',$curso)}}" 
                     method="post" class="formulario-eliminar">
                     @csrf 
                     @method('delete') 
                     <button type="submit" class="btn btn-danger btn-sm">
-                     Eliminar</button>
-                </form>
+                    Eliminar</button>
+                    </form>
+                  @endcan
                 </td>
               </tr>
           @endforeach

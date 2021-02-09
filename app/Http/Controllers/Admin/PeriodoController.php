@@ -10,6 +10,14 @@ use App\Models\Programacion;
 
 class PeriodoController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:periodo-list|periodo-create|periodo-edit|periodo-delete', ['only' => ['index','show']]);
+        $this->middleware('permission:periodo-create', ['only' => ['create','store']]);
+        $this->middleware('permission:periodo-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:periodo-delete', ['only' => ['destroy']]);
+    } 
+
     public function index()
     {
         $periodos= Periodo::all();

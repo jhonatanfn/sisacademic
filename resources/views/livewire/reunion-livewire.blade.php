@@ -6,18 +6,27 @@
           <div
             class="flex flex-col items-stretch min-h-full pb-4 mb-6 transition-all duration-150 bg-white rounded-lg shadow-lg hover:shadow-2xl">
             <div class="md:flex-shrink-0">
-              <img
+              @if ($reunion->image)
+                <img
                 src="{{Storage::url($reunion->image->url)}}"
                 alt="Blog Cover"
                 class="object-fill w-full rounded-lg rounded-b-none md:h-56"
+                />
+              @else
+              <img
+              src="{{Storage::url('default/reunion.jpg')}}"
+              alt="Blog Cover"
+              class="object-fill w-full rounded-lg rounded-b-none md:h-56"
               />
+              @endif
+              
             </div>
             <div class="flex items-center justify-between px-4 py-2 overflow-hidden">
               <span class="text-xs font-medium text-blue-600 uppercase">
                 {{$reunion->programacion->curso->nombre}}
               </span>
               <div class="flex flex-row items-center">
-                <div
+            {{--     <div
                   class="text-xs font-medium text-gray-500 flex flex-row items-center mr-2">
                   <svg
                     class="w-4 h-4 mr-1"
@@ -39,9 +48,9 @@
                     ></path>
                   </svg>
                   <span>1.5k</span>
-                </div>
+                </div> --}}
       
-                <div
+             {{--    <div
                   class="text-xs font-medium text-gray-500 flex flex-row items-center mr-2"
                 >
                   <svg
@@ -59,9 +68,9 @@
                     ></path>
                   </svg>
                   <span>25</span>
-                </div>
+                </div> --}}
       
-                <div
+          {{--       <div
                   class="text-xs font-medium text-gray-500 flex flex-row items-center"
                 >
                   <svg
@@ -79,7 +88,7 @@
                     ></path>
                   </svg>
                   <span>7</span>
-                </div>
+                </div> --}}
               </div>
             </div>
             <hr class="border-gray-300" />
@@ -100,10 +109,20 @@
             <section class="px-4 py-2 mt-2">
               <div class="flex items-center justify-between">
                 <div class="flex items-center flex-1">
-                  <img
+                  
+                  @if ($reunion->user->profile_photo_path==null)
+                    <img
                     class="object-cover h-10 rounded-full"
-                    src="{{$reunion->user->profile_photo_url }}"
-                    alt="Avatar"/>
+                    src="{{Storage::url('default/user.png')}}"
+                    alt=""
+                    />
+                  @else 
+                    <img
+                    class="object-cover h-10 rounded-full"
+                    src="{{$reunion->user->profile_photo_path }}"
+                    alt=""
+                    />
+                  @endif
                   <div class="flex flex-col mx-2">
                     <a href="{{route('reuniones.usuario',$reunion->user)}}" 
                       class="font-semibold text-gray-700 hover:underline">

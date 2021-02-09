@@ -4,27 +4,13 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreComunicadoRequest extends FormRequest
+class ComunicadoRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
     public function authorize()
     {
-        if($this->user_id==auth()->user()->id){
-            return true;
-        }else{
-            return false;
-        }
+        return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
     public function messages()
     {
         return [
@@ -32,20 +18,26 @@ class StoreComunicadoRequest extends FormRequest
             'slug.required'=>'El campo Slug es obligatorio',
             'cuerpo.required'=>'El campo Cuerpo es obligatorio',
             'extracto.required'=>'El campo Extracto es obligatorio',
+            'file.image'=>'Archivo no es una imagen'
         ];
     }
 
     public function rules()
     {
+        $comunicado= $this->route()->parameter('comunicado');
         $rules=[
             'titulo'=>'required',
-            'slug'=>'required|unique:comunicados'
+            'slug'=>'required|unique:comunicados',
+            'status'=>'required|in:1,2',
+            'file'=>'image'
         ];
 
+        if($comunicado){
+            $rules['slug']='required|unique:comunicados,slug,'.$comunicado->id;
+        }
         if($this->status==2){
             $rules= array_merge($rules,[
                 'categoria_id'=>'required',
-                'estado_id'=>'required',
                 'extracto'=>'required',
                 'cuerpo'=>'required'
             ]);

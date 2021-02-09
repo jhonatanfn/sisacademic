@@ -3,9 +3,11 @@
 @section('title', 'Notas')
 
 @section('content_header')
-<a class="btn btn-sm btn-secondary float-right" 
-href="{{route('admin.notas.create')}}">
- Agregar Nota</a>
+    @can('nota-create')
+      <a class="btn btn-sm btn-secondary float-right" 
+      href="{{route('admin.notas.create')}}">
+      Agregar Nota</a>
+    @endcan
     <h1>Listado de Notas</h1>
 @stop
 
@@ -35,9 +37,11 @@ href="{{route('admin.notas.create')}}">
               <td>{{$programacion->periodo->nombre}}</td>
               <td>{{$programacion->periodo->status}}</td>
               <td width="50px">
-                <a class="btn btn-sm btn-primary" 
+                @can('nota-edit')
+                  <a class="btn btn-sm btn-primary" 
                   href="{{route('admin.notas.detalle',$programacion)}}">
                   Notas</a>
+                @endcan
               </td>
             </tr>
         @endforeach

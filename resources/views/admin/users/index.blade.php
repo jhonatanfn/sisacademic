@@ -1,9 +1,11 @@
 @extends('adminlte::page')
 @section('title', 'Users')
 @section('content_header')
-<a class="btn btn-sm btn-secondary float-right" 
-href="{{route('admin.users.create')}}">
- Agregar Usuario</a>
+@can('usuario-create')
+  <a class="btn btn-sm btn-secondary float-right" 
+  href="{{route('admin.users.create')}}">
+  Agregar Usuario</a>
+@endcan
 <h1>Listado de Usuarios</h1>
 @stop
 @section('content')
@@ -28,25 +30,28 @@ href="{{route('admin.users.create')}}">
               <td>{{$user->name}}</td>
               <td>{{$user->email}}</td>
               <td width="50px">
+                @can('usuario-edit')
                 <a class="btn btn-sm btn-primary" 
-                  href="{{route('admin.users.edit',$user)}}">
-                  Editar</a>
+                href="{{route('admin.users.edit',$user)}}">
+                Editar</a>
+                @endcan
               </td>
               <td width="50px">
-              <form action="{{route('admin.users.destroy',$user)}}" 
+                @can('usuario-delete', Model::class)
+                  <form action="{{route('admin.users.destroy',$user)}}" 
                   method="post" class="formulario-eliminar">
                   @csrf 
                   @method('delete') 
                   <button type="submit" class="btn btn-danger btn-sm">
-                   Eliminar</button>
-              </form>
+                  Eliminar</button>
+                  </form>
+                @endcan
               </td>
             </tr>
         @endforeach
       </tbody>
     </table>
   </div>
-  
 </div>
 @stop
 

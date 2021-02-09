@@ -10,6 +10,14 @@ use App\Models\Programacion;
 
 class NotaController extends Controller
 {
+    public function __construct()
+     {
+         $this->middleware('permission:nota-list|nota-create|nota-edit|nota-delete', ['only' => ['index','show']]);
+         $this->middleware('permission:nota-create', ['only' => ['create','store']]);
+         $this->middleware('permission:nota-edit', ['only' => ['edit','update','detalle']]);
+         $this->middleware('permission:nota-delete', ['only' => ['destroy']]);
+     } 
+
     public function index()
     {
         $periodo= Periodo::where('status',1)->first();

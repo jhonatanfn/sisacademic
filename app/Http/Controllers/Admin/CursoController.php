@@ -8,11 +8,15 @@ use App\Models\Curso;
 
 class CursoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
+    public function __construct()
+    {
+        $this->middleware('permission:curso-list|curso-create|curso-edit|curso-delete', ['only' => ['index','show']]);
+        $this->middleware('permission:curso-create', ['only' => ['create','store']]);
+        $this->middleware('permission:curso-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:curso-delete', ['only' => ['destroy']]);
+    } 
+
     public function index()
     {
         $cursos= Curso::all();

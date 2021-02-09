@@ -8,11 +8,14 @@ use App\Models\User;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function __construct()
+     {
+         $this->middleware('permission:usuario-list|usuario-create|usuario-edit|usuario-delete', ['only' => ['index','show']]);
+         $this->middleware('permission:usuario-create', ['only' => ['create','store']]);
+         $this->middleware('permission:usuario-edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:usuario-delete', ['only' => ['destroy']]);
+     } 
+
     public function index()
     {
         $users= User::all();

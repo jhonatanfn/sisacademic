@@ -3,9 +3,11 @@
 @section('title', 'Reuniones')
 
 @section('content_header')
-<a class="btn btn-sm btn-secondary float-right" 
+    @can('reunion-create')
+      <a class="btn btn-sm btn-secondary float-right" 
       href="{{route('admin.reunions.create')}}">
-       Agregar Reunion</a>
+      Agregar Reunion</a>
+    @endcan
     <h1>Listado de Reuniones</h1>
 @stop
 
@@ -37,18 +39,22 @@
                 <td>{{$reunion->hora}}</td>
                 <td>{{$reunion->programacion->periodo->nombre}}</td>
                 <td width="50px">
-                  <a class="btn btn-sm btn-primary" 
+                  @can('reunion-edit')
+                    <a class="btn btn-sm btn-primary" 
                     href="{{route('admin.reunions.edit',$reunion)}}">
                     Editar</a>
+                  @endcan
                 </td>
                 <td width="50px">
-                <form action="{{route('admin.reunions.destroy',$reunion)}}" 
-                    method="post" {{-- class="formulario-eliminar" --}}>
-                    @csrf 
-                    @method('delete') 
-                    <button type="submit" class="btn btn-danger btn-sm">
-                     Eliminar</button>
-                </form>
+                    @can('reunion-delete')
+                      <form action="{{route('admin.reunions.destroy',$reunion)}}" 
+                      method="post">
+                      @csrf 
+                      @method('delete') 
+                      <button type="submit" class="btn btn-danger btn-sm">
+                      Eliminar</button>
+                      </form>
+                    @endcan   
                 </td>
               </tr>
           @endforeach

@@ -1,11 +1,10 @@
-{!! Form::hidden('user_id',auth()->user()->id) !!}
 
 <div class="form-group">
   <div class="form-group">
         {!! Form::label('programacion_id', 'Cursos') !!}
         <select name="programacion_id" id="programacion_id" class="form-control">
-          @foreach ($cursos as $curso)
-            <option value="{{$curso->id}}">{{$curso->curso->nombre}}</option>
+          @foreach ($programacionlist as $programacion)
+            <option value="{{$programacion->id}}">{{$programacion->curso->nombre}}</option>
           @endforeach
         </select>
     @error('programacion_id')
@@ -16,7 +15,7 @@
 
 <div class="form-group">
     {!! Form::label('titulo', 'Titulo') !!}
-    {!! Form::text('titulo', null, ['class'=>'form-control','placeholder'=>'Ingrese el titulo del comunicado']) !!}
+    {!! Form::text('titulo', null, ['class'=>'form-control','placeholder'=>'Ingrese el titulo del tema']) !!}
     @error('titulo')
       <span class="text-danger">{{$message}}</span>
     @enderror
@@ -24,10 +23,41 @@
 
 <div class="form-group">
   {!! Form::label('slug', 'Slug') !!}
-  {!! Form::text('slug', null, ['class'=>'form-control','placeholder'=>'Ingrese el slug del comunicado','readonly']) !!}
+  {!! Form::text('slug', null, ['class'=>'form-control','placeholder'=>'Ingrese el slug del tema','readonly']) !!}
   @error('slug')
     <span class="text-danger">{{$message}}</span>
   @enderror
+</div>
+
+<div class="row mb-3">
+  <div class="col">
+    <div class="image-wrapper">
+      @isset ($tema->image)
+        <img id="picture" src="{{Storage::url($tema->image->url)}}" alt="">
+      @else
+        <img id="picture" src="{{Storage::url('default/tema.jpg')}}" alt="">
+      @endisset
+    </div>
+  </div>
+  <div class="col">
+    <div class="form-group">
+      {!! Form::label('file', 'Imagen del tema') !!}
+      {!! Form::file('file', ['class'=>'form-control-file','accept'=>'image/*']) !!}
+      
+      @error('file')
+        <span class="text-danger">{{$message}}</span>
+      @enderror
+    
+    </div>
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+      Consequatur aut a necessitatibus modi. 
+      In perspiciatis aut deleniti velit ratione praesentium aliquid, 
+      magnam inventore. Excepturi ducimus accusantium totam aliquam non? 
+      Necessitatibus!
+    </p>
+  </div>
+  
 </div>
 
 <div class="form-group">
@@ -46,11 +76,3 @@
   @enderror
 </div>
 
-<div class="form-group">
-  {!! Form::label('file', 'Imagen') !!}
-  {!! Form::file('file',null,['class'=>'form-control','accept'=>'image/*']) !!}
-  <br>
-  @error('file')
-    <span class="text-danger">{{$message}}</span>
-  @enderror
-</div>

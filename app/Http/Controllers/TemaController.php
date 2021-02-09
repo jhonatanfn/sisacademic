@@ -37,12 +37,6 @@ class TemaController extends Controller
                     array_push($similares,$item);
             }
         }
-        
-       /*  $similares=Tema::where('programacion_id',$tema->programacion_id)
-        ->where('id','!=',$tema->id)
-        ->latest('id')
-        ->take(4)
-        ->get(); */
 
         $comentarios=$tema->comments()->latest('id')->get();
     

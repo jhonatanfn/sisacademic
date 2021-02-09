@@ -3,9 +3,13 @@
 @section('title', 'Programacions')
 
 @section('content_header')
-<a class="btn btn-sm btn-secondary float-right" 
-      href="{{route('admin.programacions.create')}}">
-       Agregar Programacion</a>
+     
+    @can('programacion-create')
+    <a class="btn btn-sm btn-secondary float-right" 
+    href="{{route('admin.programacions.create')}}">
+     Agregar Programacion</a>
+    @endcan
+
     <h1>Listado de Programaciones</h1>
 @stop
 
@@ -36,18 +40,22 @@
                 <td>{{$programacion->periodo->nombre}}</td>
                 <td>{{$programacion->periodo->status}}</td>
                 <td width="50px">
+                  @can('programacion-edit')
                   <a class="btn btn-sm btn-primary" 
-                    href="{{route('admin.programacions.edit',$programacion)}}">
-                    Editar</a>
+                  href="{{route('admin.programacions.edit',$programacion)}}">
+                  Editar</a>
+                  @endcan
                 </td>
                 <td width="50px">
-                <form action="{{route('admin.programacions.destroy',$programacion)}}" 
-                    method="post" {{-- class="formulario-eliminar" --}}>
+                  @can('programacion-delete')
+                    <form action="{{route('admin.programacions.destroy',$programacion)}}" 
+                    method="post">
                     @csrf 
                     @method('delete') 
                     <button type="submit" class="btn btn-danger btn-sm">
-                     Eliminar</button>
-                </form>
+                    Eliminar</button>
+                    </form>
+                  @endcan
                 </td>
               </tr>
           @endforeach

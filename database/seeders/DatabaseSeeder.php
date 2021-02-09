@@ -15,23 +15,20 @@ class DatabaseSeeder extends Seeder
    
     public function run()
     {
-    
-       Storage::deleteDirectory('comunicados');
-       Storage::deleteDirectory('reuniones');
-       Storage::deleteDirectory('temas');
-       Storage::makeDirectory('comunicados');
-       Storage::makeDirectory('reuniones');
-       Storage::makeDirectory('temas'); 
+
+       Storage::deleteDirectory('imagenes');
+       Storage::makeDirectory('imagenes');
 
        $this->call(PersonaSeeder::class);
        $this->call(UserSeeder::class);
-       $this->call(EstadoSeeder::class);
+       $this->call(PermissionTableSeeder::class);
+
        $this->call(CategoriaSeeder::class);
        $this->call(ComunicadoSeeder::class);
        $this->call(DocenteSeeder::class); 
        $this->call(PadreSeeder::class);
        $this->call(AlumnoSeeder::class); 
-       Periodo::factory(4)->create();
+       Periodo::factory(1)->create();
        Tipoevaluacion::factory(5)->create();
        Situacion::factory(4)->create();
        $this->call(CursoSeeder::class);
@@ -42,10 +39,7 @@ class DatabaseSeeder extends Seeder
        $this->call(TemaSeeder::class);
        $this->call(CommentSeeder::class);
        $this->call(AsistenciaSeeder::class);
-       
        Asistenciad::factory(10)->create();
        Asistenciae::factory(10)->create(); 
-    
-       $this->call(PermissionTableSeeder::class);
     }
 }

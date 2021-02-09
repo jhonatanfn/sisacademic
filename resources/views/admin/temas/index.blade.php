@@ -3,9 +3,11 @@
 @section('title', 'Temas')
 
 @section('content_header')
-<a class="btn btn-sm btn-secondary float-right" 
-      href="{{route('admin.temas.create')}}">
-       Agregar Tema</a>
+    @can('tema-create')
+    <a class="btn btn-sm btn-secondary float-right" 
+    href="{{route('admin.temas.create')}}">
+     Agregar Tema</a>
+    @endcan  
     <h1>Listado de Temas</h1>
 @stop
 
@@ -21,7 +23,7 @@
             <th>Titulo</th>
             <th>Curso</th>
             <th>Docente</th>
-            <th>Fecha creacion</th>
+            <th>Autor</th>
             <th></th>
             <th></th>
           </tr>
@@ -34,20 +36,25 @@
                 <td>{{$tema->programacion->curso->nombre}}</td>
                 <td>{{$tema->programacion->docente->persona->nombres}}
                   {{$tema->programacion->docente->persona->apellidos}}</td>
-                <td>{{$tema->created_at}}</td>
+                <td>{{$tema->user->name}}</td>
                 <td width="50px">
-                  <a class="btn btn-sm btn-primary" 
+                  @can('tema-edit')
+                    <a class="btn btn-sm btn-primary" 
                     href="{{route('admin.temas.edit',$tema)}}">
                     Editar</a>
+                  @endcan
                 </td>
                 <td width="50px">
-                <form action="{{route('admin.temas.destroy',$tema)}}" 
-                    method="post" {{-- class="formulario-eliminar" --}}>
+                  @can('tema-delete')
+                    <form action="{{route('admin.temas.destroy',$tema)}}" 
+                    method="post">
                     @csrf 
                     @method('delete') 
                     <button type="submit" class="btn btn-danger btn-sm">
-                     Eliminar</button>
-                </form>
+                    Eliminar</button>
+                    </form>
+                  @endcan
+                  
                 </td>
               </tr>
           @endforeach

@@ -13,8 +13,13 @@
             <div class="lg:col-span-2">
                 
                 <figure>
+                   @if ($comunicado->image)
                     <img class="w-full h-80 object-cover object-center" 
                     src="{{Storage::url($comunicado->image->url)}}" alt="">
+                   @else
+                    <img class="w-full h-80 object-cover object-center" 
+                    src="{{Storage::url('default/comunicado.jpg')}}" alt="">
+                   @endif
                 </figure>
 
                 <div class="text-base text-gray-500 mt-4">
@@ -32,8 +37,13 @@
                     @foreach ($similares as $similar)
                         <li class="mb-4">
                             <a class="flex" href="{{route('comunicados.show',$similar)}}">
-                                <img class="w-36 h-20 object-cover object-center" 
-                                src="{{Storage::url($similar->image->url)}}" alt="">
+                                @if ($similar->image)
+                                    <img class="w-36 h-20 object-cover object-center" 
+                                    src="{{Storage::url($similar->image->url)}}" alt="">
+                                @else
+                                    <img class="w-36 h-20 object-cover object-center" 
+                                    src="{{Storage::url('default/comunicado.jpg')}}" alt="">
+                                @endif
                                 <span class="ml-2 text-gray-600">{{$similar->titulo}}</span>
                             </a>
                         </li>

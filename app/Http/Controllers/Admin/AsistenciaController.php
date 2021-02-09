@@ -9,7 +9,14 @@ use App\Models\Reunion;
 
 class AsistenciaController extends Controller
 {
-    
+    public function __construct()
+     {
+         $this->middleware('permission:asistenciapadre-list|asistenciapadre-create|asistenciapadre-edit|asistenciapadre-delete', ['only' => ['index','show']]);
+         $this->middleware('permission:asistenciapadre-create', ['only' => ['create','store']]);
+         $this->middleware('permission:asistenciapadre-edit', ['only' => ['edit','update','detalle']]);
+         $this->middleware('permission:asistenciapadre-delete', ['only' => ['destroy']]);
+    } 
+
     public function index()
     {
         $reuniones= Reunion::where('user_id',auth()->user()->id)->get();

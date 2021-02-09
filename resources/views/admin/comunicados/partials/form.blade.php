@@ -1,4 +1,3 @@
-  {!! Form::hidden('user_id',auth()->user()->id) !!}
 
   <div class="form-group">
       {!! Form::label('titulo', 'Titulo') !!}
@@ -22,13 +21,7 @@
         <span class="text-danger">{{$message}}</span>
       @enderror
   </div>
-  <div class="form-group">
-    {!! Form::label('estado_id', 'Estados') !!}
-    {!! Form::select('estado_id', $estados, null, ['class'=>'form-control']) !!}
-    @error('estado_id')
-        <span class="text-danger">{{$message}}</span>
-    @enderror
-  </div>
+
   <div class="form-group">
     <p class="font-weight-bold">Status:</p>
     <label class="mr-2">
@@ -40,7 +33,39 @@
         Publicado
     </label>
   </div>
-  <div class="form-group">
+
+  <div class="row mb-3">
+    <div class="col">
+      <div class="image-wrapper">
+        @isset ($comunicado->image)
+          <img id="picture" src="{{Storage::url($comunicado->image->url)}}" alt="">
+        @else
+          <img id="picture" src="{{Storage::url('default/comunicado.jpg')}}" alt="">
+        @endisset
+      </div>
+    </div>
+    <div class="col">
+      <div class="form-group">
+        {!! Form::label('file', 'Imagen del comunicado') !!}
+        {!! Form::file('file', ['class'=>'form-control-file','accept'=>'image/*']) !!}
+        
+        @error('file')
+          <span class="text-danger">{{$message}}</span>
+        @enderror
+      
+      </div>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+        Consequatur aut a necessitatibus modi. 
+        In perspiciatis aut deleniti velit ratione praesentium aliquid, 
+        magnam inventore. Excepturi ducimus accusantium totam aliquam non? 
+        Necessitatibus!
+      </p>
+    </div>
+    
+  </div>
+
+  <div class="form-group ">
     {!! Form::label('extracto', 'Extracto') !!}
     {!! Form::textarea('extracto', null, ['class'=>'form-control']) !!}            
     @error('extracto')
@@ -55,11 +80,4 @@
             <small class="text-danger">{{$message}}</small>
     @enderror
   </div>
-  <div class="form-group">
-    {!! Form::label('file', 'Imagen') !!}
-    {!! Form::file('file',null,['class'=>'form-control','accept'=>'image/*']) !!}
-    <br>
-    @error('file')
-      <span class="text-danger">{{$message}}</span>
-    @enderror
-  </div>
+

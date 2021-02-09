@@ -10,11 +10,14 @@ use App\Models\User;
 
 class DocenteController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function __construct()
+     {
+         $this->middleware('permission:docente-list|docente-create|docente-edit|docente-delete', ['only' => ['index','show']]);
+         $this->middleware('permission:docente-create', ['only' => ['create','store']]);
+         $this->middleware('permission:docente-edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:docente-delete', ['only' => ['destroy']]);
+     } 
+
     public function index()
     {
         $docentes= Docente::all();

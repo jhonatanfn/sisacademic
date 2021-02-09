@@ -28,7 +28,7 @@ class PeriodoFactory extends Factory
             'slug'=>Str::slug($nombre),
             'inicio'=>$this->faker->date($format = 'Y-m-d', $max = 'now'),
             'fin'=>$this->faker->date($format = 'Y-m-d', $max = 'now'),
-            'status'=>$this->faker->randomElement([1,2]),
+            'status'=>1,
         ];
     }
 }

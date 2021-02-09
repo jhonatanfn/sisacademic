@@ -3,12 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Reunion;
 use App\Models\Programacion;
-use App\Http\Requests\StoreReunionRequest;
-use App\Models\Image;
+use App\Http\Requests\ReunionRequest;
 use App\Models\Asistencia;
+use Illuminate\Support\Facades\Storage;
 
 class ReunionController extends Controller
 {
@@ -21,17 +20,21 @@ class ReunionController extends Controller
 
     public function create()
     {
-        $cursos= array();
-        $programacions=Programacion::where('docente_id',auth()->user()->persona->docente->id)->get();
+        $programacionlist= array();
+        if(auth()->user()->id==1){
+            $programacions= Programacion::all();
+        }else{
+            $programacions=Programacion::where('docente_id',auth()->user()->persona->docente->id)->get();  
+        }
         foreach($programacions as $programacion){
             if($programacion->periodo->status==1){
-                array_push($cursos,$programacion);
+                array_push($programacionlist,$programacion);
             }
         }
-        return view('admin.reunions.create',compact('cursos'));
+        return view('admin.reunions.create',compact('programacionlist'));
     }
 
-    public function store(StoreReunionRequest $request)
+    public function store(ReunionRequest $request)
     {
         $programacion= Programacion::find($request->programacion_id);
         $matriculas=$programacion->matriculas()->get();
@@ -48,18 +51,10 @@ class ReunionController extends Controller
                 ]);
             } 
 
-            if($request->file('file')==null){
-                Image::create([
-                    'url'=>'reuniones/'.\Faker\Provider\Image::image(public_path('storage\reuniones'),640,480,null,false),
-                    'imageable_id'=>$reunion->id,
-                    'imageable_type'=>Reunion::class
-                ]);
-            }else{
-                $url= $request->file('file')->store('reuniones');
-                Image::create([
-                    'url'=>$url,
-                    'imageable_id'=>$reunion->id,
-                    'imageable_type'=>Reunion::class
+            if($request->file('file')){
+                $url= Storage::put('imagenes', $request->file('file'));
+                $reunion->image()->create([
+                    'url'=>$url
                 ]);
             }
         }else{
@@ -77,21 +72,28 @@ class ReunionController extends Controller
 
     public function edit(Reunion $reunion)
     {
-        $cursos= array();
-        $programacions=Programacion::where('docente_id',auth()->user()->persona->docente->id)->get();
+        $this->authorize('author',$reunion);
+        $programacionlist= array();
+        if(auth()->user()->id==1){
+            $programacions= Programacion::all();
+        }else{
+            $programacions=Programacion::where('docente_id',auth()->user()->persona->docente->id)->get();  
+        }
         foreach($programacions as $programacion){
             if($programacion->periodo->status==1){
-                array_push($cursos,$programacion);
+                array_push($programacionlist,$programacion);
             }
         }
 
-        return view('admin.reunions.edit',compact('reunion','cursos'));
+        return view('admin.reunions.edit',compact('reunion','programacionlist'));
     }
 
-    public function update(StoreReunionRequest $request,Reunion $reunion)
+    public function update(ReunionRequest $request,Reunion $reunion)
     {
+        $this->authorize('author',$reunion);
+
         $reunion->update($request->all());
-        
+
         if($request->file('file')!=null){
             $url= $request->file('file')->store('reuniones');
             $reunion->image()->update([
@@ -105,6 +107,7 @@ class ReunionController extends Controller
 
     public function destroy(Reunion $reunion)
     {
+        $this->authorize('author',$reunion);
         $reunion->delete();
         return redirect()->route('admin.reunions.index')
         ->with('info','La reunion se eliminó correctamente.');

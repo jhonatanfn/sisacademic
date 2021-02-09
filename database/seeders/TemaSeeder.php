@@ -21,15 +21,13 @@ class TemaSeeder extends Seeder
                 'user_id'=>$programacion->docente->persona->user->id 
             ]);
         }
-        $temas = Tema::all();
+        /* $temas = Tema::all();
 
         foreach($temas as $tema){
-            Image::create([
-                /* 'url'=>'temas/'.\Faker\Provider\Image::image(public_path('storage\temas'),440,280,null,false), */
-                'url'=>'images/tema.jpg',
+            Image::factory(1)->create([
                 'imageable_id'=>$tema->id,
                 'imageable_type'=>Tema::class
             ]);
-        } 
+        }  */
     }
 }

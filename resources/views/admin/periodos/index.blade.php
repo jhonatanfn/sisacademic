@@ -3,9 +3,11 @@
 @section('title', 'Periodos')
 
 @section('content_header')
-<a class="btn btn-sm btn-secondary float-right" 
-      href="{{route('admin.periodos.create')}}">
-       Agregar Periodo</a>
+  @can('periodo-create')
+  <a class="btn btn-sm btn-secondary float-right" 
+  href="{{route('admin.periodos.create')}}">
+   Agregar Periodo</a>
+  @endcan
     <h1>Listado de Periodos</h1>
 @stop
 
@@ -35,18 +37,22 @@
                 <td>{{$periodo->fin}}</td>
                 <td>{{$periodo->status}}</td>
                 <td width="50px">
+                  @can('periodo-edit')
                   <a class="btn btn-sm btn-primary" 
-                    href="{{route('admin.periodos.edit',$periodo)}}">
-                    Editar</a>
+                  href="{{route('admin.periodos.edit',$periodo)}}">
+                  Editar</a>
+                  @endcan
                 </td>
                 <td width="50px">
-                <form action="{{route('admin.periodos.destroy',$periodo)}}" 
-                    method="post" {{-- class="formulario-eliminar" --}}>
+                  @can('periodo-delete')
+                    <form action="{{route('admin.periodos.destroy',$periodo)}}" 
+                    method="post">
                     @csrf 
                     @method('delete') 
                     <button type="submit" class="btn btn-danger btn-sm">
-                     Eliminar</button>
-                </form>
+                    Eliminar</button>
+                    </form>
+                  @endcan
                 </td>
               </tr>
           @endforeach

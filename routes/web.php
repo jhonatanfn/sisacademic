@@ -16,7 +16,6 @@ Route::get('/', [ComunicadoController::class,'index'])->name('comunicados.index'
 Route::get('comunicados', [ComunicadoController::class,'index'])->name('comunicados.index'); 
 Route::get('comunicados/{comunicado}',[ComunicadoController::class,'show'])->name('comunicados.show');
 Route::get('comunicados/categoria/{categoria}',[ComunicadoController::class,'categoria'])->name('comunicados.categoria');
-Route::get('comunicados/estado/{estado}',[ComunicadoController::class, 'estado'])->name('comunicados.estado');
 Route::put('comunicados/publicar/{comunicado}', [ComunicadoController::class,'publicar'])->name('comunicados.publicar'); 
 
 

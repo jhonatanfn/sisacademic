@@ -2,13 +2,14 @@
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-2">
         @foreach ($comunicados as $comunicado)
             <article class="w-full h-80 bg-cover bg-center  @if($loop->first) md:col-span-2 @endif" 
-            style="background-image: url({{Storage::url($comunicado->image->url)}})">
+            style="background-image: url(
+            @if($comunicado->image) 
+                {{Storage::url($comunicado->image->url)}} 
+            @else
+                {{Storage::url('default/comunicado.jpg')}} 
+            @endif)">
                 <div class="w-full h-full px-8 flex flex-col justify-center">
-                    <div>                          
-                    <a href="{{route('comunicados.estado',$comunicado->estado)}}" 
-                    class="inline-block px-3 h-6 bg-{{$comunicado->estado->color}}-600 
-                    text-white rounded-full">{{$comunicado->estado->nombre}}</a>          
-                    
+                    <div>                                 
                     <a href="{{route('comunicados.categoria',$comunicado->categoria)}}" 
                         class="inline-block px-3 h-6 bg-{{$comunicado->categoria->color}}-600 
                         text-white rounded-full">{{$comunicado->categoria->nombre}}</a> 

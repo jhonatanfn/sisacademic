@@ -14,7 +14,6 @@ class NotaSeeder extends Seeder
     {
         $matriculas= Matricula::all();
         foreach($matriculas as $matricula){
-            for($i=0;$i<2;$i++){
                 $nota=rand(0,20);
                 if($nota<=10){
                     $situacion=Situacion::find(4)->id;
@@ -28,7 +27,6 @@ class NotaSeeder extends Seeder
                     $situacion=Situacion::find(1)->id;
                     }
                 }
-            }
                 Nota::create([
                     'matricula_id'=>$matricula->id,
                     'tipoevaluacion_id'=>rand(1,5),

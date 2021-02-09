@@ -3,9 +3,11 @@
 @section('title', 'Docentes')
 
 @section('content_header')
-  <a class="btn btn-sm btn-secondary float-right" 
+    @can('docente-create', Model::class)
+      <a class="btn btn-sm btn-secondary float-right" 
       href="{{route('admin.docentes.create')}}">
-       Agregar Docente</a>
+      Agregar Docente</a>
+    @endcan
     <h1>Listado de Docentes</h1>
 @stop
 
@@ -35,18 +37,22 @@
                 <td>{{$docente->persona->apellidos}}</td>
                 <td>{{$docente->persona->telefono}}</td>
                 <td width="50px">
+                  @can('docente-edit')
                   <a class="btn btn-sm btn-primary" 
-                    href="{{route('admin.docentes.edit',$docente)}}">
-                    Editar</a>
+                  href="{{route('admin.docentes.edit',$docente)}}">
+                  Editar</a>
+                  @endcan
                 </td>
                 <td width="50px">
-                    <form action="{{route('admin.docentes.destroy',$docente)}}" 
-                        method="post" class="formulario-eliminar">
-                        @csrf 
-                        @method('delete') 
-                        <button type="submit" class="btn btn-danger btn-sm">
-                        Eliminar</button>
+                    @can('docente-delete', Model::class)
+                      <form action="{{route('admin.docentes.destroy',$docente)}}" 
+                      method="post" class="formulario-eliminar">
+                      @csrf 
+                      @method('delete') 
+                      <button type="submit" class="btn btn-danger btn-sm">
+                      Eliminar</button>
                     </form>
+                    @endcan
                 </td>
               </tr>
           @endforeach

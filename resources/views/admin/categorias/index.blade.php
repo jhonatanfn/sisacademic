@@ -1,9 +1,11 @@
 @extends('adminlte::page')
 @section('title', 'Categorias')
 @section('content_header')
-<a class="btn btn-sm btn-secondary float-right" 
+  @can('categoria-create')
+    <a class="btn btn-sm btn-secondary float-right" 
     href="{{route('admin.categorias.create')}}">
-     Agregar Categoria</a>
+    Agregar Categoria</a>
+  @endcan
 <h1>Listado de Categorias</h1>
 @stop
 @section('content')
@@ -26,25 +28,28 @@
               <td>{{$categoria->id}}</td>
               <td>{{$categoria->nombre}}</td>
               <td width="50px">
+                @can('categoria-edit')
                 <a class="btn btn-sm btn-primary" 
-                  href="{{route('admin.categorias.edit',$categoria)}}">
-                  Editar</a>
+                href="{{route('admin.categorias.edit',$categoria)}}">
+                Editar</a>
+                @endcan
               </td>
               <td width="50px">
-              <form action="{{route('admin.categorias.destroy',$categoria)}}" 
-                  method="post" class="formulario-eliminar">
-                  @csrf 
-                  @method('delete') 
-                  <button type="submit" class="btn btn-danger btn-sm">
-                   Eliminar</button>
-              </form>
+                  @can('categoria-delete')
+                    <form action="{{route('admin.categorias.destroy',$categoria)}}" 
+                    method="post" class="formulario-eliminar">
+                    @csrf 
+                    @method('delete') 
+                    <button type="submit" class="btn btn-danger btn-sm">
+                    Eliminar</button>
+                    </form>
+                  @endcan
               </td>
             </tr>
         @endforeach
       </tbody>
     </table>
   </div>
-  
 </div>
 @stop
 

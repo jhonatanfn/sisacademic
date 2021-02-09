@@ -11,11 +11,15 @@ use Illuminate\Support\Str;
 
 class PadreController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
+    public function __construct()
+    {
+        $this->middleware('permission:padre-list|padre-create|padre-edit|padre-delete', ['only' => ['index','show']]);
+        $this->middleware('permission:padre-create', ['only' => ['create','store']]);
+        $this->middleware('permission:padre-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:padre-delete', ['only' => ['destroy']]);
+    } 
+
     public function index()
     {
         $padres= Padre::all();

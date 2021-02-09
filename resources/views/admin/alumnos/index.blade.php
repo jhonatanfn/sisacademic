@@ -3,10 +3,12 @@
 @section('title', 'Alumnos')
 
 @section('content_header')
+  @can('alumno-create')
   <a class="btn btn-sm btn-secondary float-right" 
   href="{{route('admin.alumnos.create')}}">
-  Agregar Alumno</a>
-    <h1>Listado de Alumnos</h1>
+  Agregar Alumno</a>  
+  @endcan
+  <h1>Listado de Alumnos</h1>
 @stop
 
 @section('content')
@@ -35,18 +37,23 @@
                 <td>{{$alumno->persona->apellidos}}</td>
                 <td>{{$alumno->padre->persona->nombres}} {{$alumno->padre->persona->apellidos}}</td>
                 <td width="50px">
+                  @can('alumno-edit', Model::class)
                   <a class="btn btn-sm btn-primary" 
-                    href="{{route('admin.alumnos.edit',$alumno)}}">
-                    Editar</a>
+                  href="{{route('admin.alumnos.edit',$alumno)}}">
+                  Editar</a>
+                  @endcan
+                
                 </td>
                 <td width="50px">
+                   @can('alumno-delete')
                     <form action="{{route('admin.alumnos.destroy',$alumno)}}" 
-                        method="post" class="formulario-eliminar">
-                        @csrf 
-                        @method('delete') 
-                        <button type="submit" class="btn btn-danger btn-sm">
-                        Eliminar</button>
+                    method="post" class="formulario-eliminar">
+                    @csrf 
+                    @method('delete') 
+                    <button type="submit" class="btn btn-danger btn-sm">
+                    Eliminar</button>
                     </form>
+                   @endcan
                 </td>
               </tr>
           @endforeach

@@ -36,8 +36,13 @@
                         <td class="px-6 py-4 whitespace-nowrap">
                           <div class="flex items-center">
                             <div class="flex-shrink-0 h-10 w-10">  
-                              <img class="h-10 w-10 rounded-full" 
-                              src="{{ $comentario->user->profile_photo_url }}" alt="">                 
+                             @if ($comentario->user->profile_photo_path==null)
+                             <img class="h-10 w-10 rounded-full" 
+                             src="{{ Storage::url('default/user.png') }}" alt="">    
+                             @else
+                             <img class="h-10 w-10 rounded-full" 
+                             src="{{ $comentario->user->profile_photo_url }}" alt=""> 
+                             @endif        
                             </div>
                             <div class="ml-4">
                               <div class="text-sm font-medium text-gray-900">

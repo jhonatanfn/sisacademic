@@ -244,36 +244,63 @@ return [
         [
             'text'    => 'Administración',
             'icon'    => 'fas fa-fw fa-tools',
+            'can'      =>['usuario-list','docente-list','alumno-list','padre-list','periodo-list','categoria-list','curso-list','role-list'],
             'submenu' => [
                 [
                     'text' => 'Usuarios',
                     'route'  => 'admin.users.index',
                     'icon' => 'fas fa-fw fa-users',
-                    'active'      =>['admin/users*']
+                    'active'      =>['admin/users*'],
+                    'can'         => ['usuario-list']
+                ],
+                [
+                    'text' => 'Roles',
+                    'route'  => 'admin.roles.index',
+                    'icon' => 'fas fa-fw fa-users',
+                    'active'      =>['admin/roles*'],
+                    'can'         => ['role-list']
                 ],
                 [
                     'text' => 'Docentes',
                     'route'  => 'admin.docentes.index',
                     'icon' => 'fas fa-fw fa-user-tie',
-                    'active'      =>['admin/docentes*']
+                    'active'      =>['admin/docentes*'],
+                    'can'         => ['docente-list']
                 ],
                 [
                     'text' => 'Alumnos',
                     'route'  => 'admin.alumnos.index',
                     'icon' => 'fas fa-fw fa-user-graduate',
-                    'active'      =>['admin/alumnos*']
+                    'active'      =>['admin/alumnos*'],
+                    'can'         => ['alumno-list']
                 ],
                 [
                     'text' => 'Padres de familia',
                     'route'  => 'admin.padres.index',
                     'icon' => 'fas fa-fw fa-house-user',
-                    'active'      =>['admin/padres*']
+                    'active'      =>['admin/padres*'],
+                    'can'         => ['padre-list']
                 ],
                 [
                     'text' => 'Periodos',
                     'route'  => 'admin.periodos.index',
                     'icon' => 'fas fa-fw fa-hourglass-half',
-                    'active'      =>['admin/periodos*']
+                    'active'      =>['admin/periodos*'],
+                    'can'         => ['periodo-list']
+                ],
+                [
+                    'text'        => 'Categorias',
+                    'route'         => 'admin.categorias.index',
+                    'icon'        => 'fab fa-fw fa-buffer',
+                    'active'      =>['admin/categorias*'],
+                    'can'         => ['categoria-list']
+                ],
+                [
+                    'text' => 'Cursos',
+                    'route'  => 'admin.cursos.index',
+                    'icon' => 'fas fa-fw fa-book',
+                    'active'      =>['admin/cursos*'],
+                    'can'         => ['curso-list']
                 ]
             ],
         ],
@@ -281,6 +308,7 @@ return [
         [
             'text'    => 'Publicaciones',
             'icon'    => 'fas fa-fw fa-bookmark',
+            'can'   =>['comunicado-list','tema-list','reunion-list'],
             'submenu' => [
                 
                 [
@@ -294,66 +322,62 @@ return [
                     'text'        => 'Temas',
                     'route'       => 'admin.temas.index',
                     'icon'        => 'fas fa-fw fa-file-signature',
-                    'active'      =>['admin/temas*']
+                    'active'      =>['admin/temas*'],
+                    'can'         => ['tema-list']
                 ],
                 [
                     'text'        => 'Reuniones',
                     'route'       => 'admin.reunions.index',
                     'icon'        => 'fas fa-fw fa-file-signature',
-                    'active'      =>['admin/reunions*']
-                ],
-                [
-                    'text'        => 'Categorias',
-                    'route'         => 'admin.categorias.index',
-                    'icon'        => 'fab fa-fw fa-buffer',
-                    'active'      =>['admin/categorias*']
-                ],
+                    'active'      =>['admin/reunions*'],
+                    'can'         => ['reunion-list']
+                ]
+                
             ],
         ],
 
       /*   ['header' => 'ADMINISTRACION'], */
 
         [
-            'text' => 'Cursos',
-            'route'  => 'admin.cursos.index',
-            'icon' => 'fas fa-fw fa-book',
-            'active'      =>['admin/cursos*']
-        ],
-        
-        [
             'text' => 'Notas',
             'route'  => 'admin.notas.index',
             'icon' => 'fas fa-fw fa-clipboard',
-            'active'      =>['admin/notas*']
+            'active'      =>['admin/notas*'],
+            'can'       =>  ['nota-list']
         ],
         [
             'text' => 'Programaciones',
             'route'  => 'admin.programacions.index',
             'icon' => 'fas fa-fw fa-laptop',
-            'active'      =>['admin/programacions*']
+            'active'      =>['admin/programacions*'],
+            'can' =>['programacion-list']
         ],
-
+        
         [
             'text'    => 'Asistencias',
             'icon'    => 'fas fa-fw fa-check-circle',
+            'can'       =>['asistenciapadre-list','asistenciadocente-list','asistenciaalumno-list'],
             'submenu' => [
                 [
                     'text' => 'Padres de familia',
                     'route'  => 'admin.asistencias.index',
                     'icon' => 'fas fa-fw fa-table',
-                    'active'      =>['admin/asistencias*']
+                    'active'      =>['admin/asistencias*'],
+                    'can' =>['asistenciapadre-list']
                 ],
                 [
                     'text' => 'Docentes',
                     'route'  => 'admin.asistenciads.index',
                     'icon' => 'fas fa-fw fa-table',
-                    'active'      =>['admin/asistenciads*']
+                    'active'      =>['admin/asistenciads*'],
+                    'can'  =>  ['asistenciadocente-list']
                 ],
                 [
                     'text' => 'Alumnos',
                     'route'  => 'admin.asistenciaes.index',
                     'icon' => 'fas fa-fw fa-table',
-                    'active'      =>['admin/asistenciaes*']
+                    'active'      =>['admin/asistenciaes*'],
+                    'can'  =>  ['asistenciaalumno-list']
                 ],
             ],
         ],
