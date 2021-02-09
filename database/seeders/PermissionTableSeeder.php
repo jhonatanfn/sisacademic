@@ -93,9 +93,15 @@ class PermissionTableSeeder extends Seeder
             'asistenciadocente-list',
             'asistenciadocente-edit',
             'asistenciaalumno-list',
-            'asistenciaalumno-edit',//58
-            'administrar-panel'//59
-
+            'asistenciaalumno-edit',
+            'administrar-panel',
+            'reunion-list-visual',//60
+            'reunion-usuario-visual',//61
+            'reunion-detalle-visual',//62
+            'tema-list-visual',//63
+            'tema-usuario-visual',//64
+            'tema-detalle-visual',//65
+            'perfil-usuario',//66
          ];
         foreach ($permissions as $permission) {
             array_push($permissions_array,Permission::create(['name' => $permission]));

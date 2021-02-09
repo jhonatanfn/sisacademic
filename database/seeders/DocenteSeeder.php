@@ -49,6 +49,14 @@ class DocenteSeeder extends Seeder
 
         array_push($permissions_array,Permission::find(59));
 
+        array_push($permissions_array,Permission::find(60));
+        array_push($permissions_array,Permission::find(61));
+        array_push($permissions_array,Permission::find(62));
+        array_push($permissions_array,Permission::find(63));
+        array_push($permissions_array,Permission::find(64));
+        array_push($permissions_array,Permission::find(65));
+        array_push($permissions_array,Permission::find(66));
+
         $roleDocente=Role::create(['name' => 'Docente']);
         $roleDocente->syncPermissions($permissions_array);
 

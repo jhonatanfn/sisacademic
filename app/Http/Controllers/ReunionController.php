@@ -10,13 +10,12 @@ use App\Models\User;
 
 class ReunionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public function __construct(){
         $this->middleware('auth');
+        $this->middleware('permission:reunion-list-visual|reunion-usuario-visual|reunion-detalle-visual', ['only' => ['index']]);
+        $this->middleware('permission:reunion-usuario-visual', ['only' => ['create','store','usuario']]);
+        $this->middleware('permission:reunion-detalle-visual', ['only' => ['edit','update','show','destroy']]);
     }
     
     public function index()
@@ -24,11 +23,6 @@ class ReunionController extends Controller
         return view('reuniones.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         //

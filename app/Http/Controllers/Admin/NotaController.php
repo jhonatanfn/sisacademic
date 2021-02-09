@@ -7,13 +7,16 @@ use Illuminate\Http\Request;
 use App\Models\Nota;
 use App\Models\Periodo;
 use App\Models\Programacion;
+use App\Models\Matricula;
+use App\Models\Situacion;
+use App\Models\Tipoevaluacion;
 
 class NotaController extends Controller
 {
     public function __construct()
      {
          $this->middleware('permission:nota-list|nota-create|nota-edit|nota-delete', ['only' => ['index','show']]);
-         $this->middleware('permission:nota-create', ['only' => ['create','store']]);
+         $this->middleware('permission:nota-create', ['only' => ['create','store','agregar']]);
          $this->middleware('permission:nota-edit', ['only' => ['edit','update','detalle']]);
          $this->middleware('permission:nota-delete', ['only' => ['destroy']]);
      } 
@@ -36,6 +39,7 @@ class NotaController extends Controller
     {
         $matriculas= $programacion->matriculas()->get();
         $notas=array();
+        
         foreach($matriculas as $matricula){
             $lista=$matricula->notas()->get();
             foreach($lista as $item){
@@ -44,6 +48,25 @@ class NotaController extends Controller
         }
         return view('admin.notas.detalle',compact('notas'));
     }
+
+    public function agregar(Programacion $programacion){
+        $tipoevaluacions= Tipoevaluacion::pluck('nombre','id');
+        $situacions= Situacion::pluck('nombre','id');
+        $matriculas= $programacion->matriculas()->get();
+        $notas=[];
+
+        foreach($matriculas as $matricula){
+            $nota= new Nota();
+            $nota->matricula=$matricula;
+            $nota->tipoevaluacion=Tipoevaluacion::find(1);
+            $nota->situacion=Situacion::find(1);
+            $nota->nota=0;
+            array_push($notas,$nota);
+        }
+        return view('admin.notas.agregar',compact('programacion',
+        'notas','tipoevaluacions','situacions'));
+    }
+
     public function create()
     {
         return view('admin.notas.create');
@@ -51,7 +74,7 @@ class NotaController extends Controller
 
     public function store(Request $request)
     {
-        //
+        return $request;
     }
 
     public function show(Nota $nota)

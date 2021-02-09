@@ -57,12 +57,17 @@
               class="text-gray-300 hover:bg-gray-700 
               hover:text-white px-3 py-2 rounded-md text-sm font-medium">Actividades</a> --}}
               @auth    
-              <a href="{{route('reuniones.index')}}" 
-              class="text-gray-300 hover:bg-gray-700 
-              hover:text-white px-3 py-2 rounded-md text-sm font-medium">Reuniones</a>
-              <a href="{{route('temas.index')}}" 
-              class="text-gray-300 hover:bg-gray-700 
-              hover:text-white px-3 py-2 rounded-md text-sm font-medium">Temas en clase</a>
+              @can('reunion-list-visual')  
+                <a href="{{route('reuniones.index')}}" 
+                class="text-gray-300 hover:bg-gray-700 
+                hover:text-white px-3 py-2 rounded-md text-sm font-medium">Reuniones</a>
+              @endcan
+              @can('tema-list-visual')  
+                <a href="{{route('temas.index')}}" 
+                class="text-gray-300 hover:bg-gray-700 
+                hover:text-white px-3 py-2 rounded-md text-sm font-medium">Temas en clase</a>
+              @endcan
+              
               <a href="{{route('notas.index')}}" 
               class="text-gray-300 hover:bg-gray-700 
               hover:text-white px-3 py-2 rounded-md text-sm font-medium">Notas</a>
@@ -103,9 +108,11 @@
             </div>
         
             <div x-show="open" x-on:click.away="open=false" class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5" role="menu" aria-orientation="vertical" aria-labelledby="user-menu">
-              <a href="{{ route('profile.show')}}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Tu perfil</a>
+              @can('perfil-usuario')  
+                  <a href="{{ route('profile.show')}}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Tu perfil</a>
+              @endcan
               @can('administrar-panel')  
-              <a href="{{ route('admin.index')}}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Administrar</a>
+                  <a href="{{ route('admin.index')}}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Administrar</a>
               @endcan
               
               <form method="POST" action="{{ route('logout') }}">
@@ -142,8 +149,15 @@
        
       <a href="{{route('comunicados.index')}}" class="bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium">Comunicados</a>
       {{-- <a href="{{route('actividades.index')}}" class="bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium">Actividades</a> --}}
+      
+      @can('reunion-list-visual')  
       <a href="{{route('reuniones.index')}}" class="bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium">Reuniones</a>
+      @endcan
+     
+      @can('tema-list-visual')  
       <a href="{{route('temas.index')}}" class="bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium">Temas en clase</a>
+      @endcan
+
       <a href="{{route('notas.index')}}" class="bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium">Notas</a>
        
        {{-- @foreach ($categorias as $categoria)

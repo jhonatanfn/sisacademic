@@ -35,6 +35,10 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('notas', NotaController::class)->names('admin.notas');
     Route::get('notas/programacion/{programacion}',
         [NotaController::class,'detalle'])->name('admin.notas.detalle');
+    
+    Route::get('notas/programacion/{programacion}/agregar',
+        [NotaController::class,'agregar'])->name('admin.notas.agregar');
+
     Route::resource('users', UserController::class)->names('admin.users');
     Route::resource('actividads', ActividadController::class)->names('admin.actividads');
     Route::resource('periodos', PeriodoController::class)->names('admin.periodos');

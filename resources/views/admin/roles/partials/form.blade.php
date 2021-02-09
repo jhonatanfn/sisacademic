@@ -9,10 +9,14 @@
 <div class="form-group">
     <p class="font-weight-bold">Permisos:</p>
         @foreach ($permissions as $permission)
-            <label class="mr-2">
+            {{-- <label class="mr-2">
                 {!! Form::checkbox('permissions[]', $permission->id, null) !!}
                 {{$permission->name}}
-            </label>
+            </label> --}}
+            <div class="custom-control custom-checkbox">
+                {!! Form::checkbox('permissions[]', $permission->id, null) !!}
+                {{$permission->name}}
+            </div>
         @endforeach
         @error('permissions')
             <br>

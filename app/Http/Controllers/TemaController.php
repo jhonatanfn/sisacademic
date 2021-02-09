@@ -11,6 +11,9 @@ class TemaController extends Controller
 
     public function __construct(){
         $this->middleware('auth');
+        $this->middleware('permission:tema-list-visual|tema-usuario-visual|tema-detalle-visual', ['only' => ['index']]);
+        $this->middleware('permission:tema-usuario-visual', ['only' => ['create','store','usuario']]);
+        $this->middleware('permission:tema-detalle-visual', ['only' => ['edit','update','show','destroy']]);
     }
     
     public function index()

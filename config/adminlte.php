@@ -256,7 +256,7 @@ return [
                 [
                     'text' => 'Roles',
                     'route'  => 'admin.roles.index',
-                    'icon' => 'fas fa-fw fa-users',
+                    'icon' => 'fas fa-fw fa-user-tag',
                     'active'      =>['admin/roles*'],
                     'can'         => ['role-list']
                 ],
