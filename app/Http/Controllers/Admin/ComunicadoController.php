@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Comunicado;
 use App\Models\Categoria;
-use App\Models\Estado;
 use App\Http\Requests\ComunicadoRequest;
 use Illuminate\Support\Facades\Storage;
 
